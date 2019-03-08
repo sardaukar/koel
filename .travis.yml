@@ -1,7 +1,8 @@
 language: php
 
 php:
-  - 7.0
+  - 7.1
+  - 7.2
 
 env:
   APP_ENV: testing
@@ -22,17 +23,11 @@ branches:
   - master
 
 install:
-  - . $HOME/.nvm/nvm.sh
-  - nvm install 6.10.3
-  - nvm use 6.10.3
-  - npm install -g yarn
-  - yarn
   - composer self-update
   - composer install --prefer-dist --no-interaction
 
 script:
-  - composer test
-  - yarn test
+  - composer coverage
 
 addons:
   code_climate:
@@ -40,3 +35,4 @@ addons:
 
 after_success:
   - vendor/bin/test-reporter
+  - bash <(curl -s https://codecov.io/bash)
